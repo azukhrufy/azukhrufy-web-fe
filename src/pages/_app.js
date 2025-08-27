@@ -1,5 +1,6 @@
 import { AuthProvider } from "@/contexts/AuthContext";
 import "@/styles/globals.css";
+import "@/styles/main.scss";
 import { ChakraProvider } from "@chakra-ui/react";
 // swr
 import { SWRConfig } from "swr";
@@ -11,6 +12,7 @@ const SWRConfigValue = {
 };
 
 export default function App({ Component, pageProps }) {
+  const getLayout = Component.getLayout ?? ((page) => page);
   return (
     <SWRConfig value={SWRConfigValue}>
       <ChakraProvider
@@ -18,9 +20,7 @@ export default function App({ Component, pageProps }) {
         // colorModeManager={colorModeManager}
         toastOptions={{ defaultOptions: { position: "top-right" } }}
       >
-        <AuthProvider>
-          <Component {...pageProps} />
-        </AuthProvider>
+        <AuthProvider>{getLayout(<Component {...pageProps} />)}</AuthProvider>
       </ChakraProvider>
     </SWRConfig>
   );

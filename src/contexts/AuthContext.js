@@ -1,23 +1,43 @@
 import { createContext, useContext, useState, useEffect } from "react";
-// import { setCookie, getCookie, deleteCookie } from "react-cookie";
 import api from "@/lib/axios";
-import authService from "@/services/authService";
+import axios from "axios";
 
 const AuthContext = createContext();
 
+const axiosRequest = axios.create({
+  baseURL: process.env.NEXT_PUBLIC_API_BASE_URL, // Example: http://localhost:3000/v1
+  headers: {
+    "Content-Type": "application/json",
+  },
+});
+
+/**
+ * AuthProvider component that provides authentication context to its children.
+ *
+ * @component
+ * @param {Object} props - The component props.
+ * @param {React.ReactNode} props.children - The child components.
+ *
+ * @returns {JSX.Element} The AuthContext provider with authentication state and methods.
+ *
+ * @example
+ * <AuthProvider>
+ *   <App />
+ * </AuthProvider>
+ */
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
-  
 
   useEffect(() => {
     const loadUser = async () => {
       const accessToken = localStorage.getItem("accessToken");
       if (accessToken) {
         const USER_ID = localStorage.getItem("userId");
+
         try {
           const { data } = await api.get(`/v1/users/${USER_ID}`);
-          setUser(data);
+          setUser(data?.user);
         } catch (error) {
           console.error("Failed to load user:", error);
         }
@@ -29,7 +49,10 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   const login = async (email, password) => {
-    const { data } = await authService.loginWithPassword(email, password);
+    // const { data } = await authService.loginWithPassword(email, password);
+    const data = await axiosRequest
+      .post("/v1/auth/login", { email, password })
+      .then((res) => res.data);
     localStorage.setItem("accessToken", data.tokens.access.token, {
       path: "/",
     });
@@ -48,6 +71,7 @@ export const AuthProvider = ({ children }) => {
     });
     localStorage.removeItem("accessToken");
     localStorage.removeItem("refreshToken");
+    localStorage.removeItem("userId");
     setUser(null);
   };
 

@@ -1,6 +1,6 @@
 import userService from "@/services/userService";
 import { useUsers } from "@/swrs/user";
-import createUserValidator from "@/validators/createUserValidator";
+import createUserValidator from "@/validators/userValidator";
 import { Button, Text } from "@chakra-ui/react";
 import { useEffect, useMemo } from "react";
 import { useForm } from "react-hook-form";
@@ -34,6 +34,7 @@ export default function CreateUser() {
 
   useEffect(() => {
     reset(defaultValues);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [defaultValues]);
 
   const userList = useUsers();

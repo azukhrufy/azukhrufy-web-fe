@@ -7,8 +7,14 @@ const createUser = object().shape({
   role: string().required("Role is required"),
 });
 
-const createUserValidator = {
+const login = object().shape({
+  email: string().email().required("Email is required"),
+  password: string().required("Password is required"),
+});
+
+const userValidator = {
   createUser,
+  login,
 };
 
-export default createUserValidator;
+export default userValidator;

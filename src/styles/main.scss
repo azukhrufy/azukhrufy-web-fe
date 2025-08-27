@@ -1,0 +1,59 @@
+@mixin white-gradient {
+}
+
+$animationSpeed: 20s;
+
+// Animation
+@keyframes scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(calc(-250px * 5));
+  }
+}
+
+// Styling
+.slider {
+  // box-shadow: 0 10px 20px -5px rgba(0, 0, 0, .125);
+  height: 100%;
+  margin: auto;
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+
+  &::before,
+  &::after {
+    @include white-gradient;
+    content: "";
+    height: 300px;
+    position: absolute;
+    width: 300px;
+    z-index: 2;
+  }
+
+  &::after {
+    right: 0;
+    top: 0;
+    transform: rotateZ(180deg);
+  }
+
+  &::before {
+    left: 0;
+    top: 0;
+  }
+
+  .slide-track {
+    animation: scroll $animationSpeed linear infinite;
+    display: flex;
+    align-items: center;
+    gap: 4rem;
+    width: calc(300px * 8);
+    height: 100%;
+  }
+
+  .slide {
+    // height: 100px;
+    width: 300px;
+  }
+}

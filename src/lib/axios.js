@@ -28,7 +28,8 @@ api.interceptors.response.use(
 
     // Handle 401 errors
     if (error.response?.status === 401 && originalRequest._retryCount < 3) {
-      originalRequest._retryCount += 1; // Increment the retry count
+      // Increment the retry count
+      originalRequest._retryCount += 1;
 
       try {
         const refreshToken = localStorage.getItem("refreshToken");
@@ -38,22 +39,34 @@ api.interceptors.response.use(
           throw new Error("No refresh token found. User might be logged out.");
         }
 
+        if (
+          error.response?.status === 401 &&
+          originalRequest.url === "/v1/auth/refresh-token"
+        ) {
+          localStorage.removeItem("accessToken");
+          localStorage.removeItem("refreshToken");
+          localStorage.removeItem("userId");
+          window.location.href = "/auth/login";
+          throw new Error("Refresh Tokens Expired, please login again.");
+        }
+
         // Call the refresh token endpoint
-        const { data } = await api.post("/v1/auth/refresh-tokens", {
+        const { data } = await api.post("/v1/auth/refresh-token", {
           refreshToken,
         });
 
         // Save the new tokens
-        localStorage.setItem("accessToken", data.access.token);
-        localStorage.setItem("refreshToken", data.refresh.token);
+        localStorage.setItem("accessToken", data.tokens.access.token);
+        localStorage.setItem("refreshToken", data.tokens.refresh.token);
 
         // Update Authorization header with new access token
-        api.defaults.headers.Authorization = `Bearer ${data.access.token}`;
-        originalRequest.headers.Authorization = `Bearer ${data.access.token}`;
+        api.defaults.headers.Authorization = `Bearer ${data.tokens.access.token}`;
+        originalRequest.headers.Authorization = `Bearer ${data.tokens.access.token}`;
 
         // Retry the original request
         return api(originalRequest);
       } catch (err) {
+        console.log("err", err);
         if (originalRequest._retryCount >= 3) {
           console.error("Maximum retry limit reached. Terminating requests.");
         }
@@ -66,8 +79,9 @@ api.interceptors.response.use(
       console.error("Request terminated after maximum retries.");
       localStorage.removeItem("accessToken");
       localStorage.removeItem("refreshToken");
+      localStorage.removeItem("userId");
       // Redirect to login page
-      window.location.href = "/login";
+      window.location.href = "/auth/login";
     }
 
     return Promise.reject(error);

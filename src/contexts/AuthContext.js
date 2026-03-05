@@ -37,7 +37,7 @@ export const AuthProvider = ({ children }) => {
 
         try {
           const { data } = await api.get(`/v1/users/${USER_ID}`);
-          setUser(data?.user);
+          setUser(data);
         } catch (error) {
           console.error("Failed to load user:", error);
         }

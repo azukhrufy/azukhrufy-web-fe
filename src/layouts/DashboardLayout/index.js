@@ -18,11 +18,13 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { FiChevronDown, FiHome, FiMenu } from "react-icons/fi";
+import { FaBuilding } from "react-icons/fa";
 import { useAuth } from "@/contexts/AuthContext";
 import SidebarContents from "./SidebarContents";
 
 const LinkItems = [
   { name: "Dashboard", icon: FiHome, link: PATHS.app.dashboard.root },
+  { name: "Companies", icon: FaBuilding, link: PATHS.app.companies.root },
 ];
 
 export default function DashboardLayout({ children }) {
@@ -135,7 +137,7 @@ const MobileNav = ({ onOpen, ...rest }) => {
         color="purple.500"
         lineHeight={1}
       >
-        Azukhrufy Web
+        AZ Web
       </Text>
 
       {/* Header icons and user profile */}

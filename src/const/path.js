@@ -16,7 +16,10 @@ const PATHS = {
       root: "/app",
       dashboard: {
         root: "/app/dashboard",
-      }
+      },
+      companies: {
+        root: "/app/companies",
+      },
     },
   };
   

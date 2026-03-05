@@ -6,7 +6,7 @@ export default function Logo() {
       <Image src="/assets/logo/Logo.png" height={8} alt="logo" />
       <Flex flexDir="column">
         <Text fontSize="xl" fontWeight="bold" color="purple.500" lineHeight={1.2}>
-          Azukhrufy Web
+          AZ Web
         </Text>
         <Text fontSize="xs" color="purple.500" lineHeight={1}>
           by Azukhrufy

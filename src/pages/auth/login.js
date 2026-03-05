@@ -150,7 +150,7 @@ const Login = () => {
                   />
                   <Button
                     type="submit"
-                    colorScheme="green"
+                    colorScheme="purple"
                     isLoading={isSubmitting}
                   >
                     Login

@@ -1,4 +1,5 @@
 import { AuthProvider } from "@/contexts/AuthContext";
+import { TimezoneProvider } from "@/contexts/TimezoneContext";
 import "@/styles/globals.css";
 import "@/styles/main.scss";
 import { ChakraProvider } from "@chakra-ui/react";
@@ -20,7 +21,11 @@ export default function App({ Component, pageProps }) {
         // colorModeManager={colorModeManager}
         toastOptions={{ defaultOptions: { position: "top-right" } }}
       >
-        <AuthProvider>{getLayout(<Component {...pageProps} />)}</AuthProvider>
+        <AuthProvider>
+          <TimezoneProvider>
+            {getLayout(<Component {...pageProps} />)}
+          </TimezoneProvider>
+        </AuthProvider>
       </ChakraProvider>
     </SWRConfig>
   );

@@ -1,44 +1,70 @@
+import HeroTypewriter from "@/components/HeroTypeWriter";
 import MovingLogos from "@/components/MovingLogos";
 import ProjectCard from "@/components/ProjectCard";
 import { ProjectList } from "@/const/Projects";
 import HomeLayout from "@/layouts/HomeLayouts";
+import NextLink from "next/link";
 import {
   Box,
   Button,
   Container,
   Flex,
   Grid,
+  Icon,
   Image,
   Text,
 } from "@chakra-ui/react";
+import { animate, useMotionValue, useTransform, motion } from "framer-motion";
 import Head from "next/head";
-import { useEffect, useState } from "react";
+import { useEffect, useRef } from "react";
+import { IoChatbubblesOutline } from "react-icons/io5";
 Home.getLayout = function getLayout(page) {
   return <HomeLayout>{page}</HomeLayout>;
 };
 
-function CountingText(target) {
-  const [count, setCount] = useState(0);
+const Counter = ({ from = 0, to = 100, duration = 2 }) => {
+  const count = useMotionValue(from);
+  const rounded = useTransform(count, (latest) => Math.round(latest));
+  const nodeRef = useRef(null);
 
   useEffect(() => {
-    let start = 0;
-    const duration = 1000; // in ms
-    const stepTime = Math.max(duration / target, 50); // minimum step 50ms
+    const node = nodeRef.current;
+    if (!node) return;
 
-    const interval = setInterval(() => {
-      start += 1;
-      setCount(start);
-      if (start >= target) clearInterval(interval);
-    }, stepTime);
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            // Start animation when visible
+            animate(count, to, {
+              duration,
+              ease: "easeOut",
+            });
+          } else {
+            // Reset counter when not visible
+            count.set(from);
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
 
-    return () => clearInterval(interval);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    observer.observe(node);
 
-  return count;
-}
+    return () => {
+      observer.disconnect();
+    };
+  }, [count, from, to, duration]);
+
+  return (
+    <Text fontWeight="bold" fontSize="4xl" color="yellow.500" ref={nodeRef}>
+      <motion.span>{rounded}</motion.span> +
+    </Text>
+  );
+};
 
 export default function Home() {
+  const roles = ["Ananda Zukhruf", "a Frontend Engineer", "a Web Enthusiast"];
   return (
     <>
       <Head>
@@ -68,9 +94,20 @@ export default function Home() {
                 <Text fontWeight="bold" fontSize={{ base: "4xl", lg: "6xl" }}>
                   Hi
                 </Text>
-                <Text fontWeight="bold" fontSize={{ base: "4xl", lg: "6xl" }}>
-                  I am <span style={{ color: "#805AD5" }}>Ananda Zukhruf</span>
-                </Text>
+                <Flex flexDirection="row" gap={2}>
+                  <Text fontWeight="bold" fontSize={{ base: "4xl", lg: "6xl" }}>
+                    I am
+                  </Text>
+
+                  <Box
+                    fontWeight="bold"
+                    fontSize={{ base: "4xl", lg: "6xl" }}
+                    as="span"
+                    style={{ color: "#805AD5" }}
+                  >
+                    <HeroTypewriter words={roles} />
+                  </Box>
+                </Flex>
               </Box>
 
               <Text
@@ -142,17 +179,15 @@ export default function Home() {
               flexWrap={{ base: "wrap", lg: "nowrap" }}
             >
               <Flex flexDirection="row" gap={4} alignItems="center">
-                <Text fontWeight="bold" fontSize="4xl" color="yellow.500">
-                  {`${CountingText(5)}+`}
-                </Text>
+                <Counter to={5} duration={2} />
+
                 <Text color="gray.500" maxWidth="10ch" fontSize="sm">
                   Years of experience
                 </Text>
               </Flex>
               <Flex flexDirection="row" gap={4} alignItems="center">
-                <Text fontWeight="bold" fontSize="4xl" color="yellow.500">
-                  {`${CountingText(50)}+`}
-                </Text>
+                <Counter to={50} duration={2} />
+
                 <Text color="gray.500" maxWidth="8ch" fontSize="sm">
                   Client served
                 </Text>
@@ -191,6 +226,26 @@ export default function Home() {
             ))}
           </Grid>
         </Container>
+      </Box>
+
+      <Box
+        sx={{
+          position: "fixed",
+          bottom: { base: "5rem", md: "3rem" },
+          right: { base: "0.5em", md: "2rem" },
+          zIndex: 200,
+        }}
+      >
+        <Button
+          as={NextLink}
+          colorScheme="purple"
+          size="lg"
+          borderRadius="full"
+          leftIcon={<Icon as={IoChatbubblesOutline} />}
+          href="/AskAi"
+        >
+          Ask AI
+        </Button>
       </Box>
     </>
   );

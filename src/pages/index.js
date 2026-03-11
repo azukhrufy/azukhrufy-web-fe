@@ -22,6 +22,20 @@ Home.getLayout = function getLayout(page) {
   return <HomeLayout>{page}</HomeLayout>;
 };
 
+/**
+ * A counter component that animates from a starting value to an ending value when it becomes visible in the viewport.
+ * Uses Intersection Observer API to trigger the animation and resets when the component leaves the viewport.
+ *
+ * @component
+ * @param {Object} props - Component props
+ * @param {number} [props.from=0] - The starting value of the counter
+ * @param {number} [props.to=100] - The target value to count up to
+ * @param {number} [props.duration=2] - The duration of the animation in seconds
+ * @returns {JSX.Element} A Text component displaying the animated counter value with a "+" suffix
+ *
+ * @example
+ * <Counter from={0} to={500} duration={3} />
+ */
 const Counter = ({ from = 0, to = 100, duration = 2 }) => {
   const count = useMotionValue(from);
   const rounded = useTransform(count, (latest) => Math.round(latest));
@@ -63,6 +77,27 @@ const Counter = ({ from = 0, to = 100, duration = 2 }) => {
   );
 };
 
+/**
+ * Home component - Main landing page for the portfolio website
+ *
+ * Displays a hero section with animated role titles, an about me section,
+ * work experience statistics, company logos, recent projects, and a floating
+ * AI chat button.
+ *
+ * @component
+ * @returns {JSX.Element} The home page component with multiple sections including:
+ * - Hero section with typewriter effect showing different roles
+ * - About me section with experience details
+ * - Counter statistics (years of experience, clients served)
+ * - Moving company logos carousel
+ * - Recent projects grid
+ * - Floating "Ask AI" button
+ *
+ * @example
+ * return (
+ *   <Home />
+ * )
+ */
 export default function Home() {
   const roles = ["Ananda Zukhruf", "a Frontend Engineer", "a Web Enthusiast"];
   return (
@@ -123,8 +158,19 @@ export default function Home() {
               </Text>
 
               <Flex flexDirection="row" gap={4} alignItems="center">
-                <Button colorScheme="purple">Get In Touch</Button>
-                <Button colorScheme="purple" variant="outline">
+                <Button colorScheme="purple" as={NextLink} href="/contact-us">
+                  Get In Touch
+                </Button>
+                <Button
+                  colorScheme="purple"
+                  variant="outline"
+                  onClick={() =>
+                    window.open(
+                      "https://www.cake.me/pdf/s--MGRPwofPYqdYnAIAzUOzeA--/5AnVQo.pdf",
+                      "_blank"
+                    )
+                  }
+                >
                   Download CV
                 </Button>
               </Flex>

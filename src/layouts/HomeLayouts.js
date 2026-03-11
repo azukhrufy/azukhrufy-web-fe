@@ -47,7 +47,7 @@ export default function HomeLayout({ children }) {
         className="sarekat-navbar"
         p={0}
         position="sticky"
-        background='white'
+        background="white"
         top={0}
         zIndex={20}
       >
@@ -342,14 +342,6 @@ const NAV_ITEMS = [
   {
     label: "Home",
     href: "/",
-  },
-  {
-    label: "Event",
-    href: "/events",
-  },
-  {
-    label: "Tentang Kami",
-    href: "/about-us",
   },
   {
     label: "Kontak",

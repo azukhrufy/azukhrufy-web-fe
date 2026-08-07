@@ -1,7 +1,8 @@
 import HeroTypewriter from "@/components/HeroTypeWriter";
 import MovingLogos from "@/components/MovingLogos";
-import ProjectCard from "@/components/ProjectCard";
-import { ProjectList } from "@/const/Projects";
+// import ProjectCard from "@/components/ProjectCard";
+import ShowcaseSection from "@/components/ShowcaseSection";
+// import { ProjectList } from "@/const/Projects";
 import HomeLayout from "@/layouts/HomeLayouts";
 import NextLink from "next/link";
 import {
@@ -9,7 +10,7 @@ import {
   Button,
   Container,
   Flex,
-  Grid,
+  // Grid,
   Icon,
   Image,
   Text,
@@ -60,7 +61,7 @@ const Counter = ({ from = 0, to = 100, duration = 2 }) => {
           }
         });
       },
-      { threshold: 0.1 }
+      { threshold: 0.1 },
     );
 
     observer.observe(node);
@@ -167,7 +168,7 @@ export default function Home() {
                   onClick={() =>
                     window.open(
                       "https://www.cake.me/pdf/s--MGRPwofPYqdYnAIAzUOzeA--/5AnVQo.pdf",
-                      "_blank"
+                      "_blank",
                     )
                   }
                 >
@@ -186,6 +187,7 @@ export default function Home() {
           </Flex>
         </Container>
       </Box>
+
       <Box background="gray.900" h="fit-content" py={10}>
         <Container maxW="7xl">
           <Flex flexDirection="column" gap={3} py={4}>
@@ -243,6 +245,8 @@ export default function Home() {
         </Container>
       </Box>
 
+      <ShowcaseSection />
+
       <Box>
         <Container maxW="7xl" py={10}>
           <Text textAlign="center" fontSize="5xl" fontWeight="bold" pb={4}>
@@ -252,7 +256,7 @@ export default function Home() {
         </Container>
       </Box>
 
-      <Box background="#805AD5" py={10}>
+      {/* <Box background="#805AD5" py={10}>
         <Container maxW="7xl">
           <Text
             textAlign="center"
@@ -272,7 +276,7 @@ export default function Home() {
             ))}
           </Grid>
         </Container>
-      </Box>
+      </Box> */}
 
       <Box
         sx={{

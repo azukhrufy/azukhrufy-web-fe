@@ -1,3 +1,4 @@
+import { Text } from "@chakra-ui/react";
 /**
  * A component that renders text with soft line breaks, wrapping long words as needed.
  * Each line of text is rendered as a separate paragraph, with empty lines rendered as line breaks.
@@ -24,13 +25,13 @@ export default function TextWithSoftBreaks({ children, ...rest }) {
 
   return lines.map((line, index) =>
     line ? (
-      <p
+      <Text
         key={`line-${index}`}
         style={wrapStyle}
         {...rest}
       >
         {line}
-      </p>
+      </Text>
     ) : (
       <br key={`break-${index}`} />
     )

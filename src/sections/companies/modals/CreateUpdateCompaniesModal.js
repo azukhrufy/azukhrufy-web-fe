@@ -20,7 +20,6 @@ export default function CreateUpdateCompaniesModal({
   currentData,
   mutate
 }) {
-  console.log("currentData", currentData);
   const toast = useToast();
   const defaultValues = useMemo(() => {
     return {
@@ -50,7 +49,6 @@ export default function CreateUpdateCompaniesModal({
   };
 
   const onSubmit = async (values) => {
-    console.log("values", values);
     if (currentData) {
       try {
         await companiesService.updateCompany(currentData.id, values);

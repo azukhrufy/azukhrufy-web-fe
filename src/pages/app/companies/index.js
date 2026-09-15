@@ -31,9 +31,7 @@ CompaniesPage.getLayout = function getLayout(page) {
 export default function CompaniesPage() {
   const [keyword, setKeyword] = useState("");
   const { data: listCompanies, mutate: mutateCompanies } = useGetCompanies({
-    ...(keyword?.length > 0 && { search: keyword }),
-    order: "desc",
-    orderBy: "startDate",
+    ...(keyword?.length > 0 && { name: keyword, sortBy: 'startDate' }),
   });
   const dateTimeHelper = useDateTimeHelper();
 
@@ -59,7 +57,7 @@ export default function CompaniesPage() {
         </Button>
       </Grid>
       <Flex flexDirection="column" gap={3} mt={4}>
-        {listCompanies?.map((company) => (
+        {listCompanies?.length > 0 && listCompanies?.map((company) => (
           <Box
             key={company?.id}
             border="1px solid"

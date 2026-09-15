@@ -2,6 +2,7 @@
 import NextLink from "next/link";
 import LoadingOverlay from "@/components/LoadingOverlay";
 import CustomPopover from "@/components/CustomPopover";
+import Footer from "@/components/Footer";
 import {
   Box,
   Flex,
@@ -117,6 +118,8 @@ export default function HomeLayout({ children }) {
           {children} {/* Render the main content passed as children */}
         </Suspense>
       </Box>
+
+      <Footer />
     </Box>
   );
 }
@@ -342,6 +345,10 @@ const NAV_ITEMS = [
   {
     label: "Home",
     href: "/",
+  },
+  {
+    label: "Projects",
+    href: "/projects",
   },
   {
     label: "Kontak",

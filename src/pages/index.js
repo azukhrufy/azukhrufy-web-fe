@@ -2,6 +2,10 @@ import HeroTypewriter from "@/components/HeroTypeWriter";
 import MovingLogos from "@/components/MovingLogos";
 // import ProjectCard from "@/components/ProjectCard";
 import ShowcaseSection from "@/components/ShowcaseSection";
+import SkillsSection from "@/components/SkillsSection";
+import ExperienceSection from "@/components/ExperienceSection";
+import BlogSection from "@/components/BlogSection";
+import { getMediumPosts } from "@/lib/medium";
 // import { ProjectList } from "@/const/Projects";
 import HomeLayout from "@/layouts/HomeLayouts";
 import NextLink from "next/link";
@@ -12,16 +16,40 @@ import {
   Flex,
   // Grid,
   Icon,
+  IconButton,
   Image,
   Text,
 } from "@chakra-ui/react";
 import { animate, useMotionValue, useTransform, motion } from "framer-motion";
 import Head from "next/head";
 import { useEffect, useRef } from "react";
-import { IoChatbubblesOutline } from "react-icons/io5";
+import {
+  IoChatbubblesOutline,
+  IoLogoGithub,
+  IoLogoLinkedin,
+  IoLogoGitlab,
+} from "react-icons/io5";
+
 Home.getLayout = function getLayout(page) {
   return <HomeLayout>{page}</HomeLayout>;
 };
+
+/** Fetches the latest Medium posts server-side so the Blog section always has fresh content. */
+export async function getStaticProps() {
+  const posts = await getMediumPosts(3);
+  return { props: { posts }, revalidate: 3600 };
+}
+
+const SOCIAL_LINKS = [
+  { label: "LinkedIn", href: "https://www.linkedin.com/in/azukhrufy/", icon: IoLogoLinkedin },
+  { label: "GitHub", href: "https://github.com/azukhrufy", icon: IoLogoGithub },
+  { label: "GitLab", href: "https://gitlab.com/azukhrufy", icon: IoLogoGitlab },
+];
+
+const STATS = [
+  { to: 5, label: "Years of experience" },
+  { to: 50, label: "Clients served" },
+];
 
 /**
  * A counter component that animates from a starting value to an ending value when it becomes visible in the viewport.
@@ -72,9 +100,11 @@ const Counter = ({ from = 0, to = 100, duration = 2 }) => {
   }, [count, from, to, duration]);
 
   return (
-    <Text fontWeight="bold" fontSize="4xl" color="yellow.500" ref={nodeRef}>
-      <motion.span>{rounded}</motion.span> +
-    </Text>
+    <Box textAlign="center" ref={nodeRef}>
+      <Text fontWeight="bold" fontSize={{ base: "3xl", lg: "4xl" }} color="purple.500">
+        <motion.span>{rounded}</motion.span>+
+      </Text>
+    </Box>
   );
 };
 
@@ -99,7 +129,7 @@ const Counter = ({ from = 0, to = 100, duration = 2 }) => {
  *   <Home />
  * )
  */
-export default function Home() {
+export default function Home({ posts }) {
   const roles = ["Ananda Zukhruf", "a Frontend Engineer", "a Web Enthusiast"];
   return (
     <>
@@ -121,23 +151,38 @@ export default function Home() {
             height={{ base: "fit-content", lg: "calc(100vh - 8rem)" }}
             width="100%"
             gap={4}
-            // background="purple.100"
             alignItems="center"
             justifyContent="space-between"
           >
-            <Flex flexDirection="column" gap={3} order={{ base: 1, md: 0 }}>
+            <Flex flexDirection="column" gap={4} order={{ base: 1, md: 0 }}>
+              <Flex
+                w="fit-content"
+                alignItems="center"
+                gap={2}
+                px={3}
+                py={1}
+                rounded="full"
+                bg="purple.50"
+              >
+                <Box w={2} h={2} rounded="full" bg="purple.500" />
+                <Text fontSize="sm" fontWeight="semibold" color="purple.500">
+                  Frontend Engineer · Bandung, Indonesia
+                </Text>
+              </Flex>
+
               <Box>
-                <Text fontWeight="bold" fontSize={{ base: "4xl", lg: "6xl" }}>
+                <Text fontWeight="bold" fontSize={{ base: "4xl", lg: "6xl" }} lineHeight={1.1}>
                   Hi
                 </Text>
-                <Flex flexDirection="row" gap={2}>
-                  <Text fontWeight="bold" fontSize={{ base: "4xl", lg: "6xl" }}>
+                <Flex flexDirection="row" gap={2} flexWrap="wrap">
+                  <Text fontWeight="bold" fontSize={{ base: "4xl", lg: "6xl" }} lineHeight={1.1}>
                     I am
                   </Text>
 
                   <Box
                     fontWeight="bold"
                     fontSize={{ base: "4xl", lg: "6xl" }}
+                    lineHeight={1.1}
                     as="span"
                     style={{ color: "#805AD5" }}
                   >
@@ -158,7 +203,7 @@ export default function Home() {
                 use cases.
               </Text>
 
-              <Flex flexDirection="row" gap={4} alignItems="center">
+              <Flex flexDirection="row" gap={4} alignItems="center" flexWrap="wrap">
                 <Button colorScheme="purple" as={NextLink} href="/contact-us">
                   Get In Touch
                 </Button>
@@ -175,6 +220,23 @@ export default function Home() {
                   Download CV
                 </Button>
               </Flex>
+
+              <Flex gap={3} pt={2}>
+                {SOCIAL_LINKS.map((item) => (
+                  <IconButton
+                    key={item.label}
+                    as="a"
+                    href={item.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={item.label}
+                    icon={<Icon as={item.icon} boxSize={5} />}
+                    variant="ghost"
+                    colorScheme="purple"
+                    rounded="full"
+                  />
+                ))}
+              </Flex>
             </Flex>
 
             <Image
@@ -188,73 +250,94 @@ export default function Home() {
         </Container>
       </Box>
 
-      <Box background="gray.900" h="fit-content" py={10}>
+      <Box background="gray.900" h="fit-content" py={{ base: 12, lg: 16 }}>
         <Container maxW="7xl">
-          <Flex flexDirection="column" gap={3} py={4}>
-            <Text
-              color="gray.200"
-              textAlign="center"
-              fontSize="5xl"
-              fontWeight="semibold"
-            >
-              About Me
-            </Text>
-            <Text
-              color="gray.400"
-              textAlign={{ base: "justify", lg: "center" }}
-              fontSize={{ base: "normal", lg: "lg" }}
-              fontWeight="medium"
-            >
-              Software Engineer with a solid background in the industry,
-              bringing over 5 years of experience to the table. Well-versed in
-              both project-based and product-based companies, I have
-              successfully delivered scalable solutions while meeting stringent
-              deadlines. Adept at handling multinational projects, I have a
-              proven ability to navigate diverse cultural dynamics and ensure
-              seamless collaboration across teams. I have also thrived in the
-              fast-paced environment of a startup, where I honed my adaptability
-              and problem-solving skills. Let's connect and discuss how we can
-              leverage my expertise to drive innovation and achieve mutual
-              success.
-            </Text>
+          <Flex
+            flexDirection={{ base: "column", lg: "row" }}
+            gap={{ base: 10, lg: 16 }}
+            alignItems="center"
+          >
+            <Flex flex={2} flexDirection="column" gap={3}>
+              <Text
+                color="gray.200"
+                textAlign={{ base: "center", lg: "left" }}
+                fontSize={{ base: "3xl", lg: "5xl" }}
+                fontWeight="semibold"
+              >
+                About Me
+              </Text>
+              <Text
+                color="gray.400"
+                textAlign={{ base: "justify", lg: "left" }}
+                fontSize={{ base: "normal", lg: "lg" }}
+                fontWeight="medium"
+              >
+                Software Engineer with a solid background in the industry,
+                bringing over 5 years of experience to the table. Well-versed in
+                both project-based and product-based companies, I have
+                successfully delivered scalable solutions while meeting stringent
+                deadlines. Adept at handling multinational projects, I have a
+                proven ability to navigate diverse cultural dynamics and ensure
+                seamless collaboration across teams. I have also thrived in the
+                fast-paced environment of a startup, where I honed my adaptability
+                and problem-solving skills. Let's connect and discuss how we can
+                leverage my expertise to drive innovation and achieve mutual
+                success.
+              </Text>
+            </Flex>
 
             <Flex
+              flex={1}
               flexDirection="row"
-              gap={{ base: 10, lg: 20 }}
+              gap={4}
               justifyContent="center"
-              alignItems="center"
-              py={10}
-              flexWrap={{ base: "wrap", lg: "nowrap" }}
+              flexWrap="wrap"
+              w={{ base: "100%", lg: "auto" }}
             >
-              <Flex flexDirection="row" gap={4} alignItems="center">
-                <Counter to={5} duration={2} />
-
-                <Text color="gray.500" maxWidth="10ch" fontSize="sm">
-                  Years of experience
-                </Text>
-              </Flex>
-              <Flex flexDirection="row" gap={4} alignItems="center">
-                <Counter to={50} duration={2} />
-
-                <Text color="gray.500" maxWidth="8ch" fontSize="sm">
-                  Client served
-                </Text>
-              </Flex>
+              {STATS.map((stat) => (
+                <Flex
+                  key={stat.label}
+                  flexDirection="column"
+                  alignItems="center"
+                  gap={1}
+                  flex={{ base: "1 1 40%", lg: "1 1 auto" }}
+                  minW="140px"
+                  bg="whiteAlpha.50"
+                  border="1px solid"
+                  borderColor="whiteAlpha.200"
+                  rounded="xl"
+                  py={6}
+                  px={4}
+                >
+                  <Counter to={stat.to} duration={2} />
+                  <Text color="gray.400" textAlign="center" fontSize="sm">
+                    {stat.label}
+                  </Text>
+                </Flex>
+              ))}
             </Flex>
           </Flex>
         </Container>
       </Box>
 
+      <SkillsSection />
+
+      <ExperienceSection />
+
       <ShowcaseSection />
 
-      <Box>
-        <Container maxW="7xl" py={10}>
-          <Text textAlign="center" fontSize="5xl" fontWeight="bold" pb={4}>
+      <Box bg="gray.50" py={{ base: 12, lg: 16 }}>
+        <Container maxW="7xl">
+          <Text textAlign="center" fontSize={{ base: "3xl", lg: "5xl" }} fontWeight="bold" pb={8}>
             Recent <span style={{ color: "#805AD5" }}>Work Companies</span>
           </Text>
-          <MovingLogos />
+          <Box bg="white" rounded="xl" boxShadow="sm" py={8}>
+            <MovingLogos />
+          </Box>
         </Container>
       </Box>
+
+      <BlogSection posts={posts} />
 
       {/* <Box background="#805AD5" py={10}>
         <Container maxW="7xl">

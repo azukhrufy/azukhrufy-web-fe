@@ -6,6 +6,16 @@ export const ProjectList = [
     stack: ["Next Js", "Chakra UI", "SWR", "JavaScript"],
     type: "Product",
     link: "https://myexperience.id",
+    image: "/images/showcase/myexperience.png",
+  },
+  {
+    name: "Clicky Id by MySkill",
+    description:
+      "A creator monetization platform by MySkill.id that lets creators sell digital products (ebooks, online courses, events, and memberships) without subscription or admin fees, as a Frontend Engineer, I am responsible for building the user interface and user experience of this application. Including the creator storefront, product pages, checkout flow, and affiliate dashboard.",
+    stack: ["Next Js", "Chakra UI", "SWR", "JavaScript"],
+    type: "Product",
+    link: "https://clicky.id",
+    image: "/images/showcase/clicky.png",
   },
   {
     name: "Sarekat Berkah Bersama",
@@ -14,14 +24,43 @@ export const ProjectList = [
     stack: ["Next Js", "Chakra UI", "SWR", "JavaScript"],
     type: "Project",
     link: "https://sarekatnetworks.com/",
+    image: "/images/showcase/sarekat-networks.png",
   },
   {
     name: "Peoplyee",
     description:
       "Job Portal application by Peoplyee (Previously known as Reeracoen Indonesia), as a Frontend Engineer, I am responsible for building the user interface and user experience of this application. Including the privacy agreement, job search, multilanguage,  and company profile features.",
     stack: ["Next Js", "Chakra UI", "React Query", "TypeScript"],
-    type: "Project",
+    type: "Product",
     link: "https://peoplyee.com/",
+    image: "/images/showcase/peoplyee.png",
+  },
+  {
+    name: "Graha 88 (Unofficial)",
+    description:
+      "A landing page for Graha 88, as a Frontend Engineer, I am responsible for building the user interface and user experience of this application. Including the company profile, services, and contact features.",
+    stack: ["Next Js", "Chakra UI", "JavaScript"],
+    type: "Project",
+    link: "https://graha88-landing.vercel.app/",
+    image: "/images/showcase/graha88.png",
+  },
+  {
+    name: "Suropati Hidro Energi (Unofficial)",
+    description:
+      "A landing page for Suropati Hidro Energi, as a Frontend Engineer, I am responsible for building the user interface and user experience of this application. Including the company profile, services, and contact features.",
+    stack: ["Next Js", "Chakra UI", "JavaScript"],
+    type: "Project",
+    link: "https://suropati-hidro-demo.vercel.app/",
+    image: "/images/showcase/suropati.png",
+  },
+  {
+    name: "Girana Pratama (Unofficial)",
+    description:
+      "A landing page for Girana Pratama, an outsourcing company providing sales and security personnel, as a Frontend Engineer, I am responsible for building the user interface and user experience of this application. Including the company profile, services, and contact features.",
+    stack: ["Next Js", "Chakra UI", "JavaScript"],
+    type: "Project",
+    link: "https://girana-pratama-demo.vercel.app/",
+    image: "/images/showcase/girana.png",
   },
   {
     name: "Jusclick HRMS",
@@ -30,14 +69,7 @@ export const ProjectList = [
     stack: ["Odoo", "PostgreSQL", "Python"],
     type: "Project",
     link: "https://hrms.berkahmm.com/",
-  },
-  {
-    name: "Rukun",
-    description:
-      "A platform for the Rukun community, as a Mobile Engineer, I am responsible for building the user interface and user experience of this application. Including the dashboard, community management, and several features for managing the community.",
-    stack: ["Flutter", "Dart"],
-    type: "Project",
-    link: "https://www.rukun.co/",
+    image: "/images/showcase/hrms.png",
   },
   {
     name: "Qroi Services Monitoring",
@@ -46,5 +78,6 @@ export const ProjectList = [
     stack: ["Next Js", "Ant Design", "TypeScript"],
     type: "Project",
     link: "https://www.qroi.net/",
+    image: "/images/showcase/qroi.png",
   },
 ];

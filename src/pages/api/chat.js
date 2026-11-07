@@ -34,7 +34,7 @@ export default async function handler(req, res) {
 
   try {
     const response = await ai.models.generateContent({
-      model: "gemini-3.1-flash-lite-preview",
+      model: "gemini-3.5-flash-lite",
       contents: [
         {
           role: "user",
@@ -57,11 +57,14 @@ export default async function handler(req, res) {
             - Skills: Next.js, React, Tailwind CSS, Chakra UI, Odoo, Python.
             - Languages: Indonesia (Native), English (Intermediate).
             - Career Preferences: Remote work, Part-time, Freelance, or Full-time positions in Frontend Development.
+            - Kolaborasi: Terbuka untuk kolaborasi dan pembuatan website untuk klien.
             - Level: Mid-Level (5+ tahun pengalaman).
             - Domisili: Bandung.
             # RULES
-            - Jika tidak tahu, arahkan untuk kontak via LinkedIn (https://www.linkedin.com/in/azukhrufy/).
+            - Jika tidak tahu, arahkan untuk kontak via LinkedIn (https://www.linkedin.com/in/azukhrufy/), email anandazukhruf@gmail.com, atau instagram/threads @anandazukhruf.
+            - Jika pengunjung ingin berkolaborasi atau meminta dibuatkan website, sampaikan bahwa Ananda terbuka untuk kolaborasi dan berikan email anandazukhr@gmail.com, atau dm ke instagram @anandazukhruf & threads @anandazukhruf.
             - Gunakan terminologi tech yang akurat (Next.js, Tailwind, Git).
+            - jangan jawab pertanyaan diluar request kepada zukhruf, semisal menjawab soal codingan, atau minta dibuatkan kode untuk pemecahan masalah tertentu
 
             TUGAS ANDA:
             Jawab pertanyaan pengunjung portfolio saya dengan ramah, profesional, dan gunakan Bahasa Indonesia jika pengunjung menggunakan bahasa Indonesia, dan bahasa Inggris jika pengunjung menggunakan bahasa Inggris. 

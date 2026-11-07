@@ -2,8 +2,9 @@ import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import ReactMarkdown from "react-markdown";
 import Head from "next/head";
+import NextLink from "next/link";
 import { Icon, IconButton } from "@chakra-ui/react";
-import { IoSend } from "react-icons/io5";
+import { IoArrowBack, IoSend } from "react-icons/io5";
 
 // Komponen Titik-Titik Mengetik
 const TypingIndicator = () => (
@@ -35,7 +36,7 @@ const Typewriter = ({ text, speed = 20 }) => {
   }, [currentIndex, text, speed]);
 
   return (
-    <div className="prose prose-sm max-w-none prose-p:leading-relaxed prose-strong:text-purple-600">
+    <div className="prose prose-sm max-w-none [overflow-wrap:anywhere] [&_pre]:max-w-full [&_pre]:overflow-x-auto [&_code]:break-all [&_table]:block [&_table]:max-w-full [&_table]:overflow-x-auto [&_img]:max-w-full prose-p:leading-relaxed prose-strong:text-purple-600">
       <ReactMarkdown>{displayedText}</ReactMarkdown>
     </div>
   );
@@ -105,15 +106,25 @@ export default function AskAi() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className="bg-gray-50 flex items-center justify-center font-sans">
-        <div className="w-full h-[100vh] bg-white shadow-2xl overflow-hidden flex flex-col border border-gray-100">
+      <div className="w-full min-w-0 min-h-[100dvh] bg-gray-50 flex items-center justify-center font-sans">
+        <div className="w-full h-[100dvh] min-w-0 min-h-0 bg-white shadow-2xl overflow-hidden flex flex-col border border-gray-100">
           {/* Header Chat */}
-          <div className="bg-[#805AD5] p-6 text-white flex items-center gap-4">
+          <div className="bg-[#805AD5] p-4 sm:p-6 text-white flex items-center gap-3 sm:gap-4">
+            <IconButton
+              as={NextLink}
+              href="/"
+              aria-label="Back to portfolio"
+              title="Back to portfolio"
+              icon={<Icon as={IoArrowBack} />}
+              variant="ghost"
+              color="white"
+              flexShrink={0}
+            />
             <div className="w-10 h-10 bg-purple-400 rounded-full flex items-center justify-center font-bold text-xl">
               AZ
             </div>
-            <div>
-              <h3 className="font-bold text-lg">Azukhrufy AI Assistant</h3>
+            <div className="min-w-0">
+              <h3 className="font-bold text-sm sm:text-lg leading-tight">Azukhrufy AI Assistant</h3>
               <p className="text-xs text-purple-100 underline decoration-purple-300">
                 Online | Portfolio Helper
               </p>
@@ -121,7 +132,7 @@ export default function AskAi() {
           </div>
 
           {/* Area Pesan */}
-          <div className="flex-1 overflow-y-auto p-6 space-y-4 bg-[#f8f9fa]">
+          <div className="flex-1 min-h-0 min-w-0 overflow-y-auto overflow-x-hidden p-4 sm:p-6 space-y-4 bg-[#f8f9fa]">
             <AnimatePresence initial={false}>
               {messages.map((msg, idx) => (
                 <motion.div
@@ -129,12 +140,12 @@ export default function AskAi() {
                   initial={{ opacity: 0, y: 15, scale: 0.95 }}
                   animate={{ opacity: 1, y: 0, scale: 1 }}
                   transition={{ type: "spring", stiffness: 300, damping: 25 }}
-                  className={`flex ${
+                  className={`flex w-full min-w-0 ${
                     msg.role === "user" ? "justify-end" : "justify-start"
                   }`}
                 >
                   <div
-                    className={`max-w-[85%] p-4 rounded-2xl shadow-sm text-sm sm:text-base leading-relaxed ${
+                    className={`min-w-0 max-w-[90%] sm:max-w-[85%] p-3 sm:p-4 rounded-2xl shadow-sm text-sm sm:text-base leading-relaxed [overflow-wrap:anywhere] ${
                       msg.role === "user"
                         ? "bg-purple-600 text-white rounded-tr-none"
                         : "bg-white text-gray-800 border border-gray-100 rounded-tl-none"
@@ -154,7 +165,7 @@ export default function AskAi() {
                     {msg.role === "ai" ? (
                       <Typewriter text={msg.content} />
                     ) : (
-                      <p className="leading-relaxed">{msg.content}</p>
+                      <p className="leading-relaxed [overflow-wrap:anywhere]">{msg.content}</p>
                     )}
                   </div>
                 </motion.div>
@@ -175,11 +186,11 @@ export default function AskAi() {
           </div>
 
           {/* Input Bar */}
-          <div className="p-4 bg-white border-t border-gray-100">
+          <div className="p-3 sm:p-4 bg-white border-t border-gray-100">
             <div className="flex gap-3 bg-gray-50 p-2 rounded-2xl border border-gray-200 focus-within:border-blue-500 transition-all">
               <input
                 type="text"
-                className="flex-1 bg-transparent px-3 py-2 outline-none text-gray-700"
+                className="flex-1 min-w-0 bg-transparent px-3 py-2 outline-none text-gray-700"
                 placeholder="Tanya tentang pengalaman saya..."
                 value={input}
                 onChange={(e) => setInput(e.target.value)}

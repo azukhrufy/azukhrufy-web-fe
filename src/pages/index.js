@@ -140,21 +140,29 @@ export default function Home({ posts }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Box
+        minH="100vh"
         style={{
-          height: "100vh",
           backgroundImage: `url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100'><rect width='100' height='100' fill='white'/><path d='M0 0 H100 M0 0 V100' stroke='%23d3d3d3' stroke-dasharray='4,4' stroke-width='3' stroke-opacity='0.5'/></svg>")`,
         }}
       >
         <Container maxW="7xl">
           <Flex
             flexWrap={{ base: "wrap", md: "nowrap" }}
-            height={{ base: "fit-content", lg: "calc(100vh - 8rem)" }}
+            flexDirection={{ base: "column", md: "row" }}
+            minH={{ base: "auto", lg: "calc(100vh - 8rem)" }}
+            py={{ base: 8, lg: 0 }}
             width="100%"
-            gap={4}
+            gap={{ base: 6, md: 8 }}
             alignItems="center"
             justifyContent="space-between"
           >
-            <Flex flexDirection="column" gap={4} order={{ base: 1, md: 0 }}>
+            <Flex
+              flexDirection="column"
+              gap={4}
+              minW={0}
+              flex="1"
+              order={{ base: 1, md: 0 }}
+            >
               <Flex
                 w="fit-content"
                 alignItems="center"
@@ -171,18 +179,20 @@ export default function Home({ posts }) {
               </Flex>
 
               <Box>
-                <Text fontWeight="bold" fontSize={{ base: "4xl", lg: "6xl" }} lineHeight={1.1}>
+                <Text fontWeight="bold" fontSize={{ base: "3xl", sm: "4xl", lg: "6xl" }} lineHeight={1.1}>
                   Hi
                 </Text>
                 <Flex flexDirection="row" gap={2} flexWrap="wrap">
-                  <Text fontWeight="bold" fontSize={{ base: "4xl", lg: "6xl" }} lineHeight={1.1}>
+                  <Text fontWeight="bold" fontSize={{ base: "3xl", sm: "4xl", lg: "6xl" }} lineHeight={1.1}>
                     I am
                   </Text>
 
                   <Box
                     fontWeight="bold"
-                    fontSize={{ base: "4xl", lg: "6xl" }}
+                    fontSize={{ base: "3xl", sm: "4xl", lg: "6xl" }}
                     lineHeight={1.1}
+                    maxW="100%"
+                    overflowWrap="anywhere"
                     as="span"
                     style={{ color: "#805AD5" }}
                   >
@@ -243,8 +253,10 @@ export default function Home({ posts }) {
               order={{ base: 0, md: 1 }}
               alt="personal-portrait"
               src="/images/personal_raw.png"
-              width={{ base: "100%", lg: "auto" }}
-              height={{ base: "auto", lg: "70%" }}
+              width={{ base: "100%", md: "42%" }}
+              maxW={{ base: "320px", md: "42%" }}
+              height="auto"
+              objectFit="contain"
             />
           </Flex>
         </Container>
@@ -268,7 +280,7 @@ export default function Home({ posts }) {
               </Text>
               <Text
                 color="gray.400"
-                textAlign={{ base: "justify", lg: "left" }}
+                textAlign="left"
                 fontSize={{ base: "normal", lg: "lg" }}
                 fontWeight="medium"
               >
@@ -372,7 +384,7 @@ export default function Home({ posts }) {
         <Button
           as={NextLink}
           colorScheme="purple"
-          size="lg"
+          size={{ base: "md", md: "lg" }}
           borderRadius="full"
           leftIcon={<Icon as={IoChatbubblesOutline} />}
           href="/AskAi"
